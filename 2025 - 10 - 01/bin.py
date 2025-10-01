@@ -1,8 +1,10 @@
-n1 = 195
-n2 = 89
+# Recapitulando
+intValor_1 = 195
+intValor_2 = 89
 
-print(f"{bin(n1)[2:]}")
-print(f"{bin(n2)[2:]}")
-print(f"\t {n1} & {n2} = {n1 & n2} -> {bin(n1 & n2)[2:]}")
-print(f"\t {n1} | {n2} = {n1 | n2} -> {bin(n1 | n2)[2:]}")
-print(f"\t {n1} ^ {n2} = {n1 ^ n2} -> {bin(n1 ^ n2)[2:]}")
+print(f'Valor 1................: {intValor_1:>3} -> {intValor_1:08b}')
+print(f'Valor 2................: {intValor_2:>3} -> {intValor_2:08b}')
+
+print(f'intValor_1 & intValor_2: {intValor_1 & intValor_2:>3} -> {(intValor_1 & intValor_2):08b}')
+print(f'intValor_1 | intValor_2: {intValor_1 | intValor_2:>3} -> {(intValor_1 | intValor_2):08b}')
+print(f'intValor_1 ^ intValor_2: {intValor_1 ^ intValor_2:>3} -> {(intValor_1 ^ intValor_2):08b}')
