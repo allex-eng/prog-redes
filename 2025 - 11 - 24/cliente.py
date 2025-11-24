@@ -2,14 +2,14 @@
 import socket
 
 # ----------------------------------------------------------------------
-HOST__IP_SERVER = '192.168.56.1' # Definindo o IP do servidor
-HOST_PORT       = 50000                    # Definindo a porta
-CODE_PAGE       = 'utf-8'                  # Definindo a página de 
-                                           # codificação de caracteres
+HOST_IP_SERVER = '192.168.56.1' # Definindo o IP do servidor
+HOST_PORT      = 50000                    # Definindo a porta
+CODE_PAGE      = 'utf-8'                  # Definindo a página de 
+                                          # codificação de caracteres
 # ----------------------------------------------------------------------
 
 # Criando o socket (socket.AF_INET -> IPV4 / socket.SOCK_DGRAM -> UDP)
-sockClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sockUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 print('\n\nPara sair digite SAIR...\n\n')
 
@@ -24,7 +24,7 @@ while True:
    bytesMensagem = strMensagem.encode(CODE_PAGE) 
 
    # Enviando a mensagem ao servidor      
-   sockClient.sendto(bytesMensagem, (HOST__IP_SERVER, HOST_PORT))
+   sockUDP.sendto(bytesMensagem, (HOST_IP_SERVER, HOST_PORT))
 
 # Fechando o socket
-sockClient.close()
+sockUDP.close()

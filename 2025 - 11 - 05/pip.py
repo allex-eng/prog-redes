@@ -1,17 +1,10 @@
 
-import requests
+import socket
 
-# URL de exemplo
-url = "https://api.github.com"
+hostname = socket.gethostname()
+ip = socket.gethostbyname(hostname)
 
-# Faz uma requisição GET
-response = requests.get(url)
+print("Nome da máquina:", hostname)
+print("IP da máquina:", ip)
 
-# Verifica se deu certo
-if response.status_code == 200:
-    print("✅ Requisição bem-sucedida!")
-    print("Conteúdo da resposta:")
-    print(response.json())  # Mostra o JSON retornado
-else:
-    print("❌ Erro na requisição:", response.status_code)
 
