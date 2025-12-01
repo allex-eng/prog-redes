@@ -2,20 +2,19 @@
 import socket
 
 # ----------------------------------------------------------------------
-HOST_IP_SERVER  = '192.168.56.1'              # Definindo o IP do servidor
-HOST_PORT       = 50000           # Definindo a porta
-CODE_PAGE       = 'utf-8'         # Definindo a página de 
-                                  # codificação de caracteres
-BUFFER_SIZE     = 512             # Tamanho do buffer
+HOST_IPSERVER  = '10.25.1.9'     # IP do servidor (corrigido: sem espaço no início)
+HOST_PORT      = 50000            # Porta do servidor
+CODE_PAGE      = 'utf-8'          # Codificação
+BUFFER_SIZE    = 512              # Tamanho do buffer de recepção
 # ----------------------------------------------------------------------
 
-# Criando o socket (socket.AF_INET -> IPV4 / socket.SOCK_DGRAM -> UDP)
+# Criando o socket (AF_INET -> IPv4, SOCK_DGRAM -> UDP)
 sockServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Ligando o socket à porta
-sockServer.bind((HOST_IP_SERVER, HOST_PORT)) 
+sockServer.bind((HOST_IPSERVER, HOST_PORT))
 
-# Definindo um timeout de 0.5 segundos para o socket
+# Definindo timeout de 0.5s
 sockServer.settimeout(0.5)
 
 print('\nRecebendo Mensagens...')
@@ -25,21 +24,28 @@ print('-' * 100 + '\n')
 try:
     while True:
         try:
-            # Recebendo os dados do cliente
+            # Recebendo dados do cliente
             byteMensagem, tuplaCliente = sockServer.recvfrom(BUFFER_SIZE)
         except socket.timeout:
             continue
         else:
-            # Obtendo o nome (HOST) do Cliente
-            strNomeHost = socket.gethostbyaddr(tuplaCliente[0])[0]
-            strNomeHost = strNomeHost.split('.')[0].upper()
-            # Imprimindo a mensagem recebida convertendo de bytes para string
-            print(f'{tuplaCliente} -> {strNomeHost}: {byteMensagem.decode(CODE_PAGE)}')
+            ip_cliente = tuplaCliente[0]
+
+            # Tentando obter o nome do host
+            try:
+                strNomeHost = socket.gethostbyaddr(ip_cliente)[0]
+                strNomeHost = strNomeHost.split('.')[0].upper()
+            except socket.herror:
+                # Caso não consiga resolver o hostname
+                strNomeHost = ip_cliente
+
+            mensagem = byteMensagem.decode(CODE_PAGE)
+
+            print(f'{tuplaCliente} -> {strNomeHost}: {mensagem}')
 
 except KeyboardInterrupt:
     print('\n\nAVISO: Interrupção detectada (CTRL + C). Encerrando servidor...')
 
 finally:
-    # Fechando o socket
     sockServer.close()
     print('Servidor finalizado com sucesso.')
